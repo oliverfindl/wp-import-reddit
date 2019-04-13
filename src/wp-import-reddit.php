@@ -2,7 +2,7 @@
 
 <?php
 	/**
-	 * wp-import-reddit v1.0.0 (2019-02-10)
+	 * wp-import-reddit v1.0.1 (2019-04-13)
 	 * Copyright 2019 Oliver Findl
 	 * @license MIT
 	 */
