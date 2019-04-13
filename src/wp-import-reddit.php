@@ -25,14 +25,14 @@
 	define("UNTIL_TIME_PARSED", parseDate(UNTIL_TIME));
 
 	if(strtolower(php_sapi_name()) !== "cli") {
-		print("[ERROR] Script execution allowed only from CLI.\n");
+		print("[ERROR] Script execution allowed only from CLI." . PHP_EOL);
 		exit(1);
 	}
 
 	$sources = array_slice($argv, 1);
 
 	if(empty($sources)) {
-		print("[ERROR] Subreddits not defined, please define them via script arguments.\n");
+		print("[ERROR] Subreddits not defined, please define them via script arguments." . PHP_EOL);
 		exit(1);
 	}
 
@@ -43,7 +43,7 @@
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$dbh->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	} catch(PDOException $e) {
-		echo "Connection failed: " . $e->getMessage() . "\n";
+		echo "Connection failed: " . $e->getMessage() . PHP_EOL;
 		exit(1);
 	}
 
@@ -93,13 +93,13 @@
 		$done = false;
 		while(empty($done)) {
 			$url = "https://www.reddit.com/r/{$source}/new.json?limit=100&after=" . (!empty($after) ? $after : "");
-			print("downloading: {$url}\n");
+			print("downloading: {$url}" . PHP_EOL);
 
 			$data = @file_get_contents($url);
 			$data = @json_decode($data, true);
 
 			if(empty($data)) {
-				print("[ERROR] Empty response from {$source}.\n");
+				print("[ERROR] Empty response from {$source}." . PHP_EOL);
 				exit(1);
 			}
 			$after = $data["data"]["after"];
@@ -157,14 +157,14 @@
 					":source_id" => $source_id
 				]);
 
-				print("inserted post: {$post_id}\n");
+				print("inserted post: {$post_id}" . PHP_EOL);
 			}
 		}
 	}
 
 	$dbh->exec("VACUUM;");
 
-	print("All done!\n");
+	print("All done!" . PHP_EOL);
 	exit(0);
 
 	function parseDate($value = 0): int { // input can be integer or string
